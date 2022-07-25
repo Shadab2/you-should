@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DataContext } from "../context/context";
+import { toggleModal } from "../context/DataActions";
 
-function LeftModal({
-  isOpen,
-  setOpen,
-  task: { title, description, author, src },
-}) {
+function LeftModal() {
+  const { currentTask, dispatch, modalOpen } = useContext(DataContext);
+  const { title, description, author, src } = currentTask;
+  console.log(currentTask);
   return (
     <div
       className={`${
-        isOpen ? "flex translate-x-0" : "hidden translate-x-7"
+        modalOpen ? "flex translate-x-0" : "hidden translate-x-7"
       } bg-white absolute right-0 top-[150px] h-[80%] p-4 shadow  w-[40%] z-20 flex-col `}
     >
       <div className="mb-4">
@@ -28,7 +29,10 @@ function LeftModal({
           <p className="w-[60%] font-light text-[13px]">{description}</p>
         </div>
       </form>
-      <button className="p-2  my-10  w-[100px] px-3 text-sm text-white bg-green-700 rounded-sm">
+      <button
+        className="p-2  my-10  w-[100px] px-3 text-sm text-white bg-green-700 rounded-sm"
+        onClick={() => dispatch(toggleModal())}
+      >
         Close
       </button>
     </div>

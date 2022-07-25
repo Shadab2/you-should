@@ -10,10 +10,16 @@ export const LoginFail = (error) => ({
   payload: error,
 });
 
-export const modalOpen = () => ({
-  type: "MODAL_OPEN",
+export const toggleModal = () => ({
+  type: "TOGGLE_MODAL",
 });
 
-export const modalClose = () => ({
-  type: "MODAL_CLOSE",
+export const setCurrentTask = (task) => ({
+  type: "SET_CURRENT_TASK",
+  payload: task,
+});
+
+export const update_tasks = (tasks) => ({
+  type: "UPDATE_TASKS",
+  payload: tasks,
 });

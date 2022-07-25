@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoMdStats } from "react-icons/io";
 import { AiOutlineFolderOpen } from "react-icons/ai";
@@ -6,14 +6,15 @@ import { BsChatDots, BsCalendarDate, BsSearch, BsFilter } from "react-icons/bs";
 import { FiSettings, FiLogOut } from "react-icons/fi";
 import DraggableContainer from "../components/DraggableContainer";
 import LeftModal from "../components/LeftModal";
+import { DataContext } from "../context/context";
 
 function Todos() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { currentTask, modalOpen } = useContext(DataContext);
   return (
     <div className="h-[100vh] min-h-screen bg-white">
-      <div className="w-[100%] h-[100%] flex">
-        <div className="w-[20%] h-[100%] max-h-screen flex flex-col gap-[50px] p-8 pr-0 border-r border-r-[#F0F0F0]">
-          <h1 className="text-xl font-medium">.taskez</h1>
+      <div className="w-[100%] h-[100%] relative">
+        <div className="w-[20%]  h-screen flex flex-col gap-[50px] p-8 pr-0 border-r border-r-[#F0F0F0] fixed">
+          <h1 className="text-xl font-medium cursor-pointer">.taskez</h1>
           <div className="h-[70vh] flex flex-col justify-between">
             <ul
               className="flex flex-col gap-5  text-[#9A9A9A]
@@ -52,7 +53,7 @@ function Todos() {
             </ul>
           </div>
         </div>
-        <div className="w-[80%] min-h-[100%] flex flex-col gap-[40px] p-8 pb-0 relative">
+        <div className="w-[80%] min-h-[100%] flex flex-col gap-[40px] p-8 pb-0 relative ml-[20%]">
           <div className="flex items-center w-[100%] justify-between">
             <div className="flex gap-4 w-[250px]  text-[#9A9A9A] items-center">
               <BsSearch size={16} />
@@ -107,19 +108,9 @@ function Todos() {
                 <span className="mr-2">Filter</span>
               </div>
             </div>
-            <DraggableContainer isOpen={isOpen} setIsOpen={setIsOpen} />
+            <DraggableContainer />
           </div>
-          <LeftModal
-            isOpen={isOpen}
-            task={{
-              id: "1",
-              title: "Design - App",
-              description:
-                "Modifying Career, Scholarship and Entrance exam screen Acc to new design pattern ",
-              src: "/assets/1.png",
-              author: "Suniti",
-            }}
-          />
+          <LeftModal task={currentTask} isOpen={modalOpen} />
         </div>
       </div>
     </div>

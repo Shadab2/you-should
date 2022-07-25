@@ -21,20 +21,20 @@ const DataReducer = (state, action) => {
         isFetching: false,
         error: action.payload,
       };
-    case "MODAL_OPEN":
+    case "TOGGLE_MODAL":
       return {
         ...state,
-        modalOpen: true,
+        modalOpen: !state.modalOpen,
       };
-    case "MODAL_CLOSE":
+    case "SET_CURRENT_TASK":
       return {
         ...state,
-        modalOpen: false,
+        currentTask: action.payload,
       };
-    case "ADD_TODO":
+    case "UPDATE_TASKS":
       return {
         ...state,
-        todos: [...state.todos, action.payload],
+        tasks: action.payload,
       };
     default:
       return state;

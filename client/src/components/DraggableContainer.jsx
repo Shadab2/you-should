@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import { todos as Todos } from "../data";
+import { DataContext } from "../context/context";
+import { update_tasks } from "../context/DataActions";
 import DragColumns from "./DragColumns";
 
 function DraggableContainer() {
-  const [state, setState] = useState({
-    todos: Todos,
-    inProgress: [],
-    completed: [],
-  });
-
+  const { tasks, dispatch } = useContext(DataContext);
+  const [state, setState] = useState(tasks);
   const { todos, inProgress, completed } = state;
 
   const handleDragEnd = (results) => {
@@ -45,6 +42,11 @@ function DraggableContainer() {
       ],
     }));
   };
+
+  useEffect(() => {
+    dispatch(update_tasks(state));
+  }, [state, dispatch]);
+
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="mt-5 flex gap-6 ">

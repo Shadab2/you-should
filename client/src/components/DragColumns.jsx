@@ -80,7 +80,7 @@ function DragColumns({ todos, title, id, addTask }) {
                   key={todo.id}
                   index={index}
                 >
-                  {(provided) => <Card {...todo} provided={provided} />}
+                  {(provided) => <Card todo={todo} provided={provided} />}
                 </Draggable>
               );
             })}
