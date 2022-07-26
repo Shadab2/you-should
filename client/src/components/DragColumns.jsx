@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { AiOutlinePlus } from "react-icons/ai";
+import { DataContext } from "../context/context";
 import Card from "./Card";
 
 function DragColumns({ todos, title, id, addTask }) {
   const [add, setAdd] = useState(false);
+  const { src } = useContext(DataContext);
 
   const [value, setValue] = useState({
     title: "",
@@ -63,7 +65,7 @@ function DragColumns({ todos, title, id, addTask }) {
             value={value.description}
             onChange={handleChange}
           />
-          <img src="/assets/1.png" alt="avatar" className="h-5 w-5" />
+          <img src={src} alt="avatar" className="h-5 w-5" />
         </form>
       )}
       <Droppable droppableId={`${id}`}>
@@ -76,8 +78,8 @@ function DragColumns({ todos, title, id, addTask }) {
             {todos.map((todo, index) => {
               return (
                 <Draggable
-                  draggableId={`${todo.id}`}
-                  key={todo.id}
+                  draggableId={`${todo._id}`}
+                  key={todo._id}
                   index={index}
                 >
                   {(provided) => <Card todo={todo} provided={provided} />}

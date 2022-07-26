@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
 import { DataContext } from "../context/context";
-import { tasks } from "../data";
 import axios from "axios";
 
 function SignIn() {
@@ -16,11 +15,12 @@ function SignIn() {
     };
     try {
       const res = await axios.post("/auth/login", config);
+      const tasks = await axios.get("/todo");
       const data = {
         user: res.data,
         isFetching: false,
         error: null,
-        tasks,
+        tasks: tasks.data,
         modalOpen: false,
         currentTask: {},
       };

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const todoSchema = new mongoose.Schema(
   {
-    userId: {
+    username: {
       type: String,
       required: true,
     },
@@ -10,11 +10,17 @@ const todoSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    desc: {
+    description: {
       type: String,
+      required: true,
+    },
+    src: {
+      type: String,
+      retuired: true,
     },
     status: {
       type: String,
+      default: "todos",
     },
   },
   { timestamps: true }

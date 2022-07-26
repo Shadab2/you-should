@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { DataContext } from "../context/context";
@@ -5,7 +6,7 @@ import { update_tasks } from "../context/DataActions";
 import DragColumns from "./DragColumns";
 
 function DraggableContainer() {
-  const { tasks, dispatch, user, ...Other } = useContext(DataContext);
+  const { tasks, dispatch, user, src, ...Other } = useContext(DataContext);
   const [state, setState] = useState(tasks);
   const { todos, inProgress, completed } = state;
 
@@ -29,19 +30,22 @@ function DraggableContainer() {
     dispatch(update_tasks(state));
   };
 
-  const addTask = (id, todo) => {
-    setState((prev) => ({
-      ...prev,
-      [id]: [
-        ...state[id],
-        {
-          ...todo,
-          id: Date.now(),
-          src: "/assets/6.png",
-          author: user.username,
-        },
-      ],
-    }));
+  const addTask = async (id, todo) => {
+    try {
+      const data = {
+        src,
+        username: user.username,
+        status: id,
+        ...todo,
+      };
+      const res = await axios.post("/todo", data);
+      setState((prev) => ({
+        ...prev,
+        [id]: [...state[id], res.data],
+      }));
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {

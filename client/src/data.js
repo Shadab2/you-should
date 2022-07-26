@@ -6,7 +6,7 @@ export const tasks = {
       description:
         "Modifying Career, Scholarship and Entrance exam screen Acc to new design pattern ",
       src: "/assets/1.png",
-      author: "Suniti",
+      author: "Rodriguez",
     },
     {
       id: "2",
@@ -14,7 +14,7 @@ export const tasks = {
       description:
         "Modifying Career, Scholarship and Entrance exam screen Acc to new design pattern ",
       src: "/assets/2.png",
-      author: "Suniti",
+      author: "Lisa",
     },
     {
       id: "3",
@@ -22,7 +22,7 @@ export const tasks = {
       description:
         "Modifying Career, Scholarship and Entrance exam screen Acc to new design pattern ",
       src: "/assets/3.png",
-      author: "Suniti",
+      author: "Sharon Chavez",
     },
   ],
   inProgress: [],

@@ -6,7 +6,16 @@ const Todo = require("../model/todo");
 router.get("/", async (req, res) => {
   try {
     const todos = await Todo.find();
-    res.status(200).send(todos);
+    const tasks = {
+      todos: [],
+      inProgress: [],
+      completed: [],
+    };
+
+    todos.forEach((task) => {
+      tasks[task.status].push(task);
+    });
+    res.status(200).send(tasks);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -19,6 +28,7 @@ router.post("/", async (req, res) => {
     await newTodo.save();
     res.status(200).send(newTodo);
   } catch (e) {
+    console.log("happen");
     res.status(500).send(e);
   }
 });
@@ -43,8 +53,6 @@ router.delete("/:id", async (req, res) => {
   try {
     const todo = await Todo.findById(req.params.id);
     if (!todo) return res.status(404).json("No such todo");
-    if (todo.userId !== req.body.userId)
-      return res.status(400).json("You can only delete your todos");
     await todo.deleteOne();
     res.status(200).json("Sucessfully deleted");
   } catch (e) {

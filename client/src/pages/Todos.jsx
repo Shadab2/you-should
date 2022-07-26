@@ -17,8 +17,10 @@ function Todos() {
     modalOpen,
     user: { username },
     dispatch,
+    src,
   } = useContext(DataContext);
 
+  console.log(src);
   const handleLogOut = () => {
     localStorage.clear();
     dispatch({
@@ -118,7 +120,7 @@ function Todos() {
             </div>
             <div className="flex gap-2 items-center">
               <p>Hi {username}</p>
-              <img src="assets/6.png" alt="avatar" className="w-10 h-10" />
+              <img src={src} alt="avatar" className="w-10 h-10" />
             </div>
           </div>
           <div>
