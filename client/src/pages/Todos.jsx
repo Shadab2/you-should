@@ -7,9 +7,27 @@ import { FiSettings, FiLogOut } from "react-icons/fi";
 import DraggableContainer from "../components/DraggableContainer";
 import LeftModal from "../components/LeftModal";
 import { DataContext } from "../context/context";
+import { useNavigate } from "react-router-dom";
+import { INITIAL_STATE } from "../context/context";
 
 function Todos() {
-  const { currentTask, modalOpen } = useContext(DataContext);
+  const navigate = useNavigate();
+  const {
+    currentTask,
+    modalOpen,
+    user: { username },
+    dispatch,
+  } = useContext(DataContext);
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    dispatch({
+      type: "INIT",
+      payload: INITIAL_STATE,
+    });
+    navigate("/login", { replace: true });
+  };
+
   return (
     <div className="h-[100vh] min-h-screen bg-white">
       <div className="w-[100%] h-[100%] relative">
@@ -20,33 +38,36 @@ function Todos() {
               className="flex flex-col gap-5  text-[#9A9A9A]
 "
             >
-              <li className="flex items-center gap-3 text-sm">
+              <li className="flex items-center gap-3 hover:text-gray-600 cursor-pointer text-sm">
                 <AiOutlineHome size={18} />
                 OverView
               </li>
-              <li className="flex items-center gap-3 text-sm">
+              <li className="flex items-center gap-3 hover:text-gray-600 cursor-pointer text-sm">
                 <IoMdStats size={18} />
                 Stats
               </li>
-              <li className="flex items-center gap-3 text-sm border-r-[3px] font-semibold text-black border-[#329C89]">
+              <li className="flex items-center gap-3 hover:text-gray-600 cursor-pointer text-sm border-r-[3px] font-semibold text-black border-[#329C89]">
                 <AiOutlineFolderOpen size={18} />
                 Projects
               </li>
-              <li className="flex items-center gap-3 text-sm">
+              <li className="flex items-center gap-3 hover:text-gray-600 cursor-pointer text-sm">
                 <BsChatDots size={16} />
                 Chats
               </li>
-              <li className="flex items-center gap-3 text-sm">
+              <li className="flex items-center gap-3 hover:text-gray-600 cursor-pointer text-sm">
                 <BsCalendarDate size={16} />
                 Calendar
               </li>
             </ul>
             <ul className="  flex flex-col gap-5 mb-10 text-[#9A9A9A]">
-              <li className="flex items-center gap-3 text-sm">
+              <li className="flex items-center gap-3 hover:text-gray-600 cursor-pointer text-sm">
                 <FiSettings size={16} />
                 Settings
               </li>
-              <li className="flex items-center gap-3 text-sm">
+              <li
+                className="flex items-center gap-3 hover:text-gray-600 cursor-pointer text-sm"
+                onClick={handleLogOut}
+              >
                 <FiLogOut size={16} />
                 Log out
               </li>
@@ -96,7 +117,7 @@ function Todos() {
               />
             </div>
             <div className="flex gap-2 items-center">
-              <p>Hi Saundarya</p>
+              <p>Hi {username}</p>
               <img src="assets/6.png" alt="avatar" className="w-10 h-10" />
             </div>
           </div>

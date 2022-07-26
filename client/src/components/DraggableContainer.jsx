@@ -38,7 +38,7 @@ function DraggableContainer() {
           ...todo,
           id: Date.now(),
           src: "/assets/6.png",
-          author: "Sweta",
+          author: user.username,
         },
       ],
     }));

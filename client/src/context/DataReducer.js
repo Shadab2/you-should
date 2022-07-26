@@ -9,7 +9,6 @@ const DataReducer = (state, action) => {
       };
     case "LOGIN_SUCCESS":
       return {
-        ...state,
         user: action.payload,
         isFetching: false,
         error: null,

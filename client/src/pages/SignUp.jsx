@@ -1,17 +1,27 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 function SignUp({ setActive }) {
   const [state, setState] = useState({
     email: "",
-    fullName: "",
+    username: "",
     password: "",
   });
-  const { email, fullName, password } = state;
+  const { email, username, password } = state;
 
   const handleChange = (e) => {
     setState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/auth/register", state);
+      setActive(true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <form className="p-4 flex flex-col gap-6">
       <hr />
@@ -19,8 +29,8 @@ function SignUp({ setActive }) {
         type="text"
         className="w-[100%] py-2 px-3 text-sm placeholder:text-gray-300 outline-none border border-gray-200 rounded-md"
         placeholder="Full Name"
-        name="fullName"
-        value={fullName}
+        name="username"
+        value={username}
         onChange={handleChange}
       />
       <input
@@ -41,7 +51,7 @@ function SignUp({ setActive }) {
       />
       <button
         className="py-2 px-3 font-semibold text-white rounded-md bg-[#329C89]"
-        onClick={() => setActive(false)}
+        onClick={handleSubmit}
       >
         Sign Up
       </button>

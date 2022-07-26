@@ -17,7 +17,7 @@ function App() {
   }, []);
   return (
     <Routes>
-      <Route path="/" element={<ProtectedRoute user={user} />}>
+      <Route path="/" element={<ProtectedRoute />}>
         <Route path="/" element={<Todos />} />
       </Route>
       <Route

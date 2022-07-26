@@ -4,6 +4,7 @@ import SignUp from "./SignUp";
 
 function Login() {
   const [active, setActive] = useState(true);
+
   return (
     <div className="w-screen h-screen flex items-center p-10 justify-center gap-5">
       <div className="w-[40%] mr-12">
