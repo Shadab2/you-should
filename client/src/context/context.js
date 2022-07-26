@@ -9,6 +9,7 @@ export const INITIAL_STATE = {
   tasks: [],
   modalOpen: false,
   currentTask: {},
+  cached: true,
 };
 
 export const DataContext = React.createContext(INITIAL_STATE);
@@ -19,7 +20,8 @@ const randomizeSrc = () => {
 export const DataProvider = ({ children }) => {
   const [state, dispatch] = useReducer(DataReducer, INITIAL_STATE);
   const [src, setSrc] = useState("");
-  const { user, isFetching, error, modalOpen, currentTask, tasks } = state;
+  const { user, isFetching, error, modalOpen, currentTask, tasks, cached } =
+    state;
 
   useEffect(() => {
     setSrc(randomizeSrc());
@@ -35,6 +37,7 @@ export const DataProvider = ({ children }) => {
         currentTask,
         dispatch,
         src,
+        cached,
       }}
     >
       {children}

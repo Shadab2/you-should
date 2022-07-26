@@ -1,14 +1,20 @@
 import React, { useContext, useRef, useState } from "react";
 import { DataContext } from "../context/context";
 import toast, { Toaster } from "react-hot-toast";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 
 function SignIn() {
-  const { dispatch } = useContext(DataContext);
+  const { dispatch, cached } = useContext(DataContext);
+  const [passwordType, setPasswordType] = useState("password");
   const password = useRef();
   const email = useRef();
   const [error, setError] = useState("");
 
+  const togglePassword = () => {
+    if (passwordType === "text") setPasswordType("password");
+    else setPasswordType("text");
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const config = {
@@ -26,7 +32,7 @@ function SignIn() {
         modalOpen: false,
         currentTask: {},
       };
-      localStorage.setItem("data", JSON.stringify(data));
+      if (cached) localStorage.setItem("data", JSON.stringify(data));
       setError(null);
       toast.success("Login Successfull", 1000);
       setTimeout(() => {
@@ -66,12 +72,26 @@ function SignIn() {
         placeholder="Email"
         ref={email}
       />
-      <input
-        type="password"
-        className="w-[100%] py-2 px-3 text-sm placeholder:text-gray-300 outline-none border border-gray-200 rounded-md"
-        placeholder="password"
-        ref={password}
-      />
+      <div className="relative">
+        <input
+          type={passwordType}
+          className="w-[100%] py-2 px-3 text-sm placeholder:text-gray-300 outline-none border border-gray-200 rounded-md"
+          placeholder="password"
+          ref={password}
+        />
+        {
+          <div
+            className="absolute right-[20px] top-[35%] cursor-pointer "
+            onClick={togglePassword}
+          >
+            {passwordType === "password" ? (
+              <AiFillEye color="gray" />
+            ) : (
+              <AiFillEyeInvisible color="gray" />
+            )}
+          </div>
+        }
+      </div>
       <div className="w-[100%] relative ">
         {error && (
           <div className="absolute -top-[30px]  text-red-600 p-2 text-[11px] w-[100%] grid place-content-center">

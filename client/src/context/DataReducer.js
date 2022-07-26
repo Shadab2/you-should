@@ -39,6 +39,11 @@ const DataReducer = (state, action) => {
       return taskEdit(state, action.payload);
     case "INIT":
       return action.payload;
+    case "CACHE_TOGGLE":
+      return {
+        ...state,
+        cached: !state.cached,
+      };
     default:
       return state;
   }

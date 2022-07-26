@@ -6,7 +6,8 @@ import { update_tasks } from "../context/DataActions";
 import DragColumns from "./DragColumns";
 
 function DraggableContainer() {
-  const { tasks, dispatch, user, src, ...Other } = useContext(DataContext);
+  const { tasks, dispatch, user, cached, src, ...Other } =
+    useContext(DataContext);
   const [state, setState] = useState(tasks);
   const { todos, inProgress, completed } = state;
 
@@ -66,6 +67,7 @@ function DraggableContainer() {
   };
 
   useEffect(() => {
+    if (!cached) return;
     try {
       const data = {
         tasks: state,
