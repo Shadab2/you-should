@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoMdStats } from "react-icons/io";
-import { AiOutlineFolderOpen } from "react-icons/ai";
+import { AiOutlineFolderOpen, AiOutlineTeam } from "react-icons/ai";
 import { BsChatDots, BsCalendarDate, BsSearch, BsFilter } from "react-icons/bs";
 import { FiSettings, FiLogOut } from "react-icons/fi";
 import DraggableContainer from "../components/DraggableContainer";
@@ -10,6 +10,7 @@ import { DataContext } from "../context/context";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { INITIAL_STATE } from "../context/context";
+import Modal from "../components/Modal";
 
 function Todos() {
   const navigate = useNavigate();
@@ -21,6 +22,11 @@ function Todos() {
     src,
   } = useContext(DataContext);
 
+  const [open, setOpen] = useState(false);
+
+  const handleModal = () => {
+    setOpen((op) => !op);
+  };
   const handleLogOut = () => {
     localStorage.clear();
     setTimeout(() => {
@@ -73,6 +79,13 @@ function Todos() {
               <li className="flex items-center gap-3 hover:text-gray-600 cursor-pointer text-sm">
                 <BsCalendarDate size={16} />
                 Calendar
+              </li>
+              <li
+                className="flex items-center gap-3 hover:text-gray-600 cursor-pointer text-sm font-medium text-black "
+                onClick={handleModal}
+              >
+                <AiOutlineTeam size={16} />
+                View Team
               </li>
             </ul>
             <ul className="  flex flex-col gap-5 mb-10 text-[#9A9A9A]">
@@ -139,7 +152,9 @@ function Todos() {
           </div>
           <div>
             <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-semibold">Projects</h1>
+              <h1 className="text-2xl font-semibold  cursor-pointer">
+                Projects
+              </h1>
               <div className="flex items-center">
                 <BsFilter />
                 <span className="mr-2">Filter</span>
@@ -150,6 +165,7 @@ function Todos() {
           <LeftModal task={currentTask} isOpen={modalOpen} />
         </div>
       </div>
+      <Modal open={open} closeModal={handleModal} />
     </div>
   );
 }

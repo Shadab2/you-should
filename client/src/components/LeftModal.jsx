@@ -40,7 +40,7 @@ function LeftModal() {
     <div
       className={`${
         modalOpen ? "flex translate-x-0" : "hidden translate-x-7"
-      } bg-white absolute right-0 top-[150px] h-[80%] p-4 shadow  w-[60%] z-20 flex-col `}
+      } bg-white absolute right-0 top-[150px] h-[80%] p-4 shadow-lg  w-[60%] z-20 flex-col `}
     >
       <div className="mb-4">
         <h1 className="font-semibold">{title}</h1>
