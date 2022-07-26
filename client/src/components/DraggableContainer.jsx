@@ -10,7 +10,11 @@ function DraggableContainer() {
   const [state, setState] = useState(tasks);
   const { todos, inProgress, completed } = state;
 
-  const handleDragEnd = (results) => {
+  useEffect(() => {
+    setState(tasks);
+  }, [tasks]);
+
+  const handleDragEnd = async (results) => {
     const { source, destination } = results;
     if (!destination) return;
     if (
@@ -28,6 +32,19 @@ function DraggableContainer() {
       [destination.droppableId]: modifiedTo,
     }));
     dispatch(update_tasks(state));
+    if (source.droppableId !== destination.droppableId) {
+      try {
+        await axios.put(`/todo/${removed._id}`, {
+          src: removed.src,
+          description: removed.description,
+          username: removed.username,
+          title: removed.title,
+          status: destination.droppableId,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
   };
 
   const addTask = async (id, todo) => {

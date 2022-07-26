@@ -35,11 +35,27 @@ const DataReducer = (state, action) => {
         ...state,
         tasks: action.payload,
       };
+    case "TASK_EDIT":
+      return taskEdit(state, action.payload);
     case "INIT":
       return action.payload;
     default:
       return state;
   }
+};
+
+const taskEdit = (state, task) => {
+  const filtered = state.tasks[task.status].map((item) =>
+    item._id === task._id ? task : item
+  );
+
+  return {
+    ...state,
+    tasks: {
+      ...state.tasks,
+      [task.status]: filtered,
+    },
+  };
 };
 
 export default DataReducer;

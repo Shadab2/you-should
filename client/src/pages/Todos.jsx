@@ -7,6 +7,7 @@ import { FiSettings, FiLogOut } from "react-icons/fi";
 import DraggableContainer from "../components/DraggableContainer";
 import LeftModal from "../components/LeftModal";
 import { DataContext } from "../context/context";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { INITIAL_STATE } from "../context/context";
 
@@ -20,18 +21,31 @@ function Todos() {
     src,
   } = useContext(DataContext);
 
-  console.log(src);
   const handleLogOut = () => {
     localStorage.clear();
-    dispatch({
-      type: "INIT",
-      payload: INITIAL_STATE,
-    });
-    navigate("/login", { replace: true });
+    setTimeout(() => {
+      dispatch({
+        type: "INIT",
+        payload: INITIAL_STATE,
+      });
+      toast.success("Logout Successfull", 500);
+      navigate("/login", { replace: true });
+    }, 1000);
   };
 
   return (
     <div className="h-[100vh] min-h-screen bg-white">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          success: {
+            style: {
+              background: "#329C89",
+              color: "white",
+            },
+          },
+        }}
+      />
       <div className="w-[100%] h-[100%] relative">
         <div className="w-[20%]  h-screen flex flex-col gap-[50px] p-8 pr-0 border-r border-r-[#F0F0F0] fixed">
           <h1 className="text-xl font-medium cursor-pointer">.taskez</h1>

@@ -13,7 +13,6 @@ function Card({ todo, provided }) {
       {...provided.draggableProps}
       {...provided.dragHandleProps}
       onClick={() => {
-        console.log(todo);
         dispatch(setCurrentTask(todo));
         dispatch(toggleModal());
       }}

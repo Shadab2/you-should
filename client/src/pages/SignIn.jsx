@@ -1,11 +1,13 @@
 import React, { useContext, useRef, useState } from "react";
 import { DataContext } from "../context/context";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
 function SignIn() {
   const { dispatch } = useContext(DataContext);
   const password = useRef();
   const email = useRef();
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,16 +27,32 @@ function SignIn() {
         currentTask: {},
       };
       localStorage.setItem("data", JSON.stringify(data));
-      dispatch({
-        type: "INIT",
-        payload: data,
-      });
+      setError(null);
+      toast.success("Login Successfull", 1000);
+      setTimeout(() => {
+        dispatch({
+          type: "INIT",
+          payload: data,
+        });
+      }, 2000);
     } catch (e) {
+      setError("Email/Password Invalid");
       dispatch({ type: "LOGIN_FAIL", payload: e.message });
     }
   };
   return (
-    <form className="p-4 flex flex-col gap-6">
+    <form className="p-4 flex flex-col gap-8">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          success: {
+            style: {
+              background: "#329C89",
+              color: "white",
+            },
+          },
+        }}
+      />
       <hr />
       <div>
         <h1 className="text-xl ">To Continue</h1>
@@ -54,12 +72,20 @@ function SignIn() {
         placeholder="password"
         ref={password}
       />
-      <button
-        className="py-2 px-3 font-semibold text-white rounded-md bg-[#329C89]"
-        onClick={handleSubmit}
-      >
-        Log In
-      </button>
+      <div className="w-[100%] relative ">
+        {error && (
+          <div className="absolute -top-[30px]  text-red-600 p-2 text-[11px] w-[100%] grid place-content-center">
+            &#9888;&nbsp;{error}
+          </div>
+        )}
+
+        <button
+          className="py-2 px-3 font-semibold w-[100%] text-white rounded-md bg-[#329C89]"
+          onClick={handleSubmit}
+        >
+          Log In
+        </button>
+      </div>
     </form>
   );
 }

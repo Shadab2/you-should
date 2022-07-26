@@ -38,8 +38,6 @@ router.put("/:id", async (req, res) => {
   try {
     const todo = await Todo.findById(req.params.id);
     if (!todo) return res.status(404).json("No such todo");
-    if (todo.userId !== req.body.userId)
-      return res.status(400).json("You can only update your todos");
     await todo.updateOne({ $set: req.body });
     res.status(200).json("Sucessfully updated");
   } catch (e) {
