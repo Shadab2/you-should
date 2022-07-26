@@ -3,12 +3,14 @@ import DataReducer from "./DataReducer";
 import { tasks } from "../data";
 
 const INITIAL_STATE = {
-  user: null,
-  isFetching: false,
-  error: null,
-  tasks,
-  modalOpen: false,
-  currentTask: {},
+  // user: {
+  //   name: "Shadab Danish",
+  // },
+  // isFetching: false,
+  // error: null,
+  // tasks,
+  // modalOpen: false,
+  // currentTask: {},
 };
 
 export const DataContext = React.createContext(INITIAL_STATE);

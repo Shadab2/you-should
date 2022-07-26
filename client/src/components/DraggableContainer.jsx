@@ -5,7 +5,7 @@ import { update_tasks } from "../context/DataActions";
 import DragColumns from "./DragColumns";
 
 function DraggableContainer() {
-  const { tasks, dispatch } = useContext(DataContext);
+  const { tasks, dispatch, user, ...Other } = useContext(DataContext);
   const [state, setState] = useState(tasks);
   const { todos, inProgress, completed } = state;
 
@@ -26,6 +26,7 @@ function DraggableContainer() {
       [source.droppableId]: modifiedFrom,
       [destination.droppableId]: modifiedTo,
     }));
+    dispatch(update_tasks(state));
   };
 
   const addTask = (id, todo) => {
@@ -44,7 +45,16 @@ function DraggableContainer() {
   };
 
   useEffect(() => {
-    dispatch(update_tasks(state));
+    try {
+      const data = {
+        tasks: state,
+        user,
+        ...Other,
+      };
+      localStorage.setItem("data", JSON.stringify(data));
+    } catch (e) {
+      console.log(e);
+    }
   }, [state, dispatch]);
 
   return (

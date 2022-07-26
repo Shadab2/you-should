@@ -36,6 +36,8 @@ const DataReducer = (state, action) => {
         ...state,
         tasks: action.payload,
       };
+    case "INIT":
+      return action.payload;
     default:
       return state;
   }

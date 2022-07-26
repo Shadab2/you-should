@@ -5,7 +5,6 @@ import { toggleModal } from "../context/DataActions";
 function LeftModal() {
   const { currentTask, dispatch, modalOpen } = useContext(DataContext);
   const { title, description, author, src } = currentTask;
-  console.log(currentTask);
   return (
     <div
       className={`${
